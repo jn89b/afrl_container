@@ -61,19 +61,28 @@ kill:
 ###########
 #  TASKS  #
 ###########
+#
+
 # Start a terminal inside the Docker container
 .PHONY: term
 term:
-	@docker run -it --net=host \
+	@docker run -i --net=host \
+		--device=/dev/ttyUSB0 \
 		${DOCKER_ARGS} ${IMAGE_NAME}_overlay \
 		bash
 
-# # Start basic simulation included with TurtleBot3 packages
-# .PHONY: sim
-# sim:
-# 	@docker run -it --net=host \
-# 		${DOCKER_ARGS} ${IMAGE_NAME}_overlay \
-# 		roslaunch turtlebot3_gazebo turtlebot3_world.launch
+
+.PHONY: test
+test:
+	@docker run -i --net=host \
+		--device=/dev/ttyUSB0 \
+		${DOCKER_ARGS} ${IMAGE_NAME}_overlay \
+		roslaunch mavros px4.launch
+
+.PHONY: sim
+sim:
+	@docker run -it --net=host \
+ 		${DOCKER_ARGS} ${IMAGE_NAME}_overlay 
 
 # # Start Terminal for teleoperating the TurtleBot3
 # .PHONY: teleop

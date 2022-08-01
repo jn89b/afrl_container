@@ -14,3 +14,4 @@ RUN source /opt/ros/noetic/setup.bash \
 WORKDIR /overlay_ws
 COPY ./docker/entrypoint.sh /
 ENTRYPOINT [ "/entrypoint.sh" ]
+

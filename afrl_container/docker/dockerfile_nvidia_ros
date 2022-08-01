@@ -1,8 +1,12 @@
 # Ubuntu 20.04 image with NVIDIA CUDA + OpenGL and ROS Noetic
-FROM nvidia/cudagl:11.1.1-base-ubuntu20.04
+#FROM nvidia/cudagl:11.1.1-base-ubuntu20.04
+FROM ubuntu:20.04
+
 
 # Install basic apt packages
 RUN apt-get update && apt-get install -y locales lsb-release
+RUN apt-get update && apt-get install -y gnupg2
+
 
 # Set up locale and UTF-8 encoding, mostly so setup runs without errors
 ARG DEBIAN_FRONTEND=noninteractive
@@ -17,7 +21,7 @@ RUN dpkg-reconfigure locales
 RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
 RUN apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
 RUN apt-get update \
- && apt-get install -y --no-install-recommends ros-noetic-desktop-full
+ && apt-get install -y --no-install-recommends ros-noetic-ros-base
 RUN apt-get install -y --no-install-recommends python3-rosdep
 RUN rosdep init \
  && rosdep fix-permissions \
